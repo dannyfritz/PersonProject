@@ -425,7 +425,7 @@ app.controller('AdminSelectSurveysController', ["$scope", "$state", "AdminServic
   };
 
   $scope.selectSurveys = function() {
-    var url = '/admin/surveys/download';
+    var url = '/admin/csv-surveys/download';
     $location.path(url).search("id", $scope.view.selected);
   };
 }]);
