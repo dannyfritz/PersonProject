@@ -14,7 +14,7 @@ app.controller('AdminController', ["$scope", "UsersService", "ModalService",
     $scope.deleteAdmin = function(userId) {
       ModalService.showModal({
         templateUrl: "/partials/admin/delete_admin_modal.html",
-        controller: "AdminDeleteController",
+        controller: "ModalController",
       }).then(function(modal) {
         modal.element.modal();
         modal.close.then(function(result) {
@@ -46,7 +46,7 @@ app.controller('AdminController', ["$scope", "UsersService", "ModalService",
 /* *********************************************************************************** */
 /* *********************************************************************************** */
 
-app.controller('AdminDeleteController', ["$scope", "close",
+app.controller('ModalController', ["$scope", "close",
   function($scope, close) {
     $scope.dismissModal = function(result) {
       close(result, 200);
@@ -87,7 +87,7 @@ app.controller('AdminSurveysController', ["$scope", "SurveysService", "SurveyIte
     $scope.deleteSurvey = function(survey) {
       ModalService.showModal({
         templateUrl: "/partials/admin/delete_survey_modal.html",
-        controller: "AdminDeleteController",
+        controller: "ModalController",
       }).then(function(modal) {
         modal.element.modal();
         modal.close.then(function(result) {
@@ -491,16 +491,26 @@ app.controller('AdminSelectSurveyItemsController', ["$scope", "$state", "AdminSe
 /* *********************************************************************************** */
 /* *********************************************************************************** */
 
-app.controller('UserDashboardController', ["$state", "$rootScope", "$scope", "UsersService", "$location", "LocalAuthService", "$stateParams",
-  function ($state, $rootScope, $scope, UsersService, $location, LocalAuthService, $stateParams) {
+app.controller('UserDashboardController', ["$state", "$rootScope", "$scope", "UsersService", "$location", "LocalAuthService", "$stateParams", "ModalService",
+  function ($state, $rootScope, $scope, UsersService, $location, LocalAuthService, $stateParams, ModalService) {
 
   $scope.email = LocalAuthService.email();
   $scope.username = LocalAuthService.username();
 
-  $scope.destroy = function(){
-    UsersService.destroy().then(function(data){
-      LocalAuthService.clearCredentials();
-      $state.go('home');
+  $scope.destroyAfterConfirmation = function() {
+    ModalService.showModal({
+      templateUrl: "/partials/users/delete_user_modal.html",
+      controller: "ModalController",
+    }).then(function(modal) {
+      modal.element.modal();
+      modal.close.then(function(result) {
+        if (result === "DELETE") {
+          UsersService.destroy().then(function(data){
+            LocalAuthService.clearCredentials();
+            $state.go('home');
+          });
+        }
+      });
     });
   };
 
