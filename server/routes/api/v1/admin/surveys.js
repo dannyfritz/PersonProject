@@ -45,7 +45,7 @@ function getQueryParamAsArray(req, param, options) {
   } else if (req.query[param]) {
     vals = [req.query[param]];
   }
-  
+
   return vals;
 }
 
@@ -191,7 +191,7 @@ router.get('/csv', auth.ensureLoggedIn, auth.ensureAdmin, function(req, res) {
       var order = include
       var surveyCountParam = ids.length - 1;
 
-      var q = knex.select(knex.raw('subquery.*, a.value, q.text'))
+      var q = knex.select(knex.raw('subquery.*, a.value, q.text, q.id'))
               .from(function(){
                   this.select(knex.raw('s.name, c.user_id, c.id as completion_id, ( select count(c2.id) from completions c2 where c2.user_id = c.user_id) as survey_count'))
                       .from(knex.raw('completions c'))
@@ -209,11 +209,16 @@ router.get('/csv', auth.ensureLoggedIn, auth.ensureAdmin, function(req, res) {
                       obj[r.user_id] = obj[r.user_id] || {};
                       obj[r.user_id].user_id = r.user_id;
                       obj[r.user_id][r.text] = r.value;
+                      if (questionToIdMap[r.text] === undefined) {
+                          questionToIdMap[r.text] = r.id;
+                      }
                   });
 
                 var objs = _.map(obj, function(value, key){
                   return value;
                 });
+                objs.unshift(questionToIdMap);
+                
                 var fs = require('fs');
                 json2csv({data: objs, del: '\t', quotes: ''}, function(err, tsv){
                   fs.writeFile('file.tsv', tsv, function(err) {
