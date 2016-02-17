@@ -25,3 +25,33 @@ describe("csv", function() {
         });
     });
 });
+
+
+describe("Authenticated admins", function() {
+  var authCookies;
+  createAdmin('t@testing.com', 'password123');
+  beforeEach(function(done) {
+      request.post('/api/v1/users/signin')
+        .send({username: 't@testing.com', password: 'password123'})
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          authCookies = res.headers['set-cookie'].map(function(cookie) {
+            return cookie.split(';')[0];
+          }).join(';');
+          done();
+        });
+  });
+
+  it('will allow admins to request CSV', function(done){
+      request.get('/api/v1/admin/surveys')
+      .set('Cookie', authCookies)
+      .send()
+      .expect(200)
+      .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
+  });
+  
+});

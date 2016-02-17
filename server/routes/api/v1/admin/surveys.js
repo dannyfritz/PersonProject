@@ -6,6 +6,7 @@ var bookshelf = require('../../../../config/connection').surveys;
 var json2csv = require('json2csv');
 var _ = require('lodash');
 var Promise = require('bluebird');
+var knex = bookshelf.knex
 
 var MAX_FEATURED_SURVEYS = 8;
 
@@ -187,61 +188,41 @@ router.get('/csv', auth.ensureLoggedIn, auth.ensureAdmin, function(req, res) {
       });
     });
   } else if (include === 'last' || include === 'first') {
+      var order = include
+      var surveyCountParam = ids.length - 1;
 
-    var query = multiline.stripIndent(function(){/*
-      select comps.survey_id, comps.user_id, q.text, q.id, a.value
-      from 
-          (select distinct on (c.user_id, c.survey_id) c.id, c.survey_id,
-                  c.version_id, c.user_id, c.created_at, c.updated_at
-           from completions c order by c.user_id, c.survey_id, created_at
-    */});
+      var q = knex.select(knex.raw('subquery.*, a.value, q.text'))
+              .from(function(){
+                  this.select(knex.raw('s.name, c.user_id, c.id as completion_id, ( select count(c2.id) from completions c2 where c2.user_id = c.user_id) as survey_count'))
+                      .from(knex.raw('completions c'))
+                      .orderBy('c.created_at', order)
+                      .joinRaw('left outer join surveys s on c.survey_id = s.id')
+                      .whereIn(knex.raw('s.id'), ids)
+                      .as('subquery')
+              })
+              .joinRaw('left outer join answers a on subquery.completion_id = a.completion_id')
+              .joinRaw('left outer join questions q on q.id = a .question_id')
+              .whereRaw('survey_count > ?', surveyCountParam )
+              .whereIn(knex.raw('a.question_id'), qids)
+          q.then(function(resp) {
+                  resp.forEach(function(r){
+                      obj[r.user_id] = obj[r.user_id] || {};
+                      obj[r.user_id].user_id = r.user_id;
+                      obj[r.user_id][r.text] = r.value;
+                  });
 
-    if (include === 'last') query +=  " DESC";
-    if (include === 'first') query += " ASC";
-    query += multiline.stripIndent(function() {/*
-      ) comps
-      join answers a on comps.id=a.completion_id
-      join questions q on q.id=a.question_id
-      where
-    */});
-
-    query += " ("
-    for (var i = 0; i < ids.length; i++) {
-      query += " comps.survey_id=?"
-      if (i+1 < ids.length) { query += " or";}
-      else { query += ")"}
-    }
-
-    if (qids.length > 0) { query += " and ("; }
-    for (i = 0; i < qids.length; i++) {
-      query += "q.id=?";
-      if (i+1 < qids.length)  { query += " or "; }
-      if (i+1 === qids.length) { query += ")";}
-    }
-
-    bookshelf.knex.raw(query, ids.concat(qids)).then(function(data) {
-      data.rows.forEach(function(r) {
-        obj[r.user_id] = obj[r.user_id] || {};
-        obj[r.user_id].user_id = r.user_id;
-        obj[r.user_id][r.text] = r.value;
-        if (questionToIdMap[r.text] === undefined) {
-          questionToIdMap[r.text] = r.id;
+                var objs = _.map(obj, function(value, key){
+                  return value;
+                });
+                var fs = require('fs');
+                json2csv({data: objs, del: '\t', quotes: ''}, function(err, tsv){
+                  fs.writeFile('file.tsv', tsv, function(err) {
+                    res.download('file.tsv');
+                  });
+                });
+            });
         }
       });
 
-      var objs = _.map(obj, function(value, key){
-        return value;
-      });
-
-      objs.unshift(questionToIdMap);
-      var fs = require('fs');
-      json2csv({data: objs, del: '\t', quotes: ''}, function(err, tsv){
-        fs.writeFile('file.tsv', tsv, function(err) {
-          res.download('file.tsv');
-        });
-      });
-    });
-  }
-});
 
 module.exports = router;
