@@ -188,20 +188,18 @@ router.get('/csv', auth.ensureLoggedIn, auth.ensureAdmin, function(req, res) {
       });
     });
   } else if (include === 'last' || include === 'first') {
-      var order = include
-      var surveyCountParam = ids.length - 1;
 
-      var q = knex.select(knex.raw('subquery.*, a.value, q.text, q.id'))
+      var surveyCountParam = ids.length -1;
+      var q = knex.select(knex.raw('subquery.*, a.value, q.text, q.id as qid'))
               .from(function(){
-                  this.select(knex.raw('s.name, c.user_id, c.id as completion_id, ( select count(c2.id) from completions c2 where c2.user_id = c.user_id) as survey_count'))
+                  this.select(knex.raw('s.name, c.user_id, c.id as completion_id, ( select count(c2.id) from completions c2 where c2.user_id = c.user_id and c2.survey_id in ('+ ids + ')  ) as survey_count'))
                       .from(knex.raw('completions c'))
-                      .orderBy('c.created_at', order)
-                      .joinRaw('left outer join surveys s on c.survey_id = s.id')
+                      .joinRaw('right outer join surveys s on c.survey_id = s.id')
                       .whereIn(knex.raw('s.id'), ids)
                       .as('subquery')
               })
-              .joinRaw('left outer join answers a on subquery.completion_id = a.completion_id')
-              .joinRaw('left outer join questions q on q.id = a .question_id')
+              .joinRaw('right outer join answers a on subquery.completion_id = a.completion_id')
+              .joinRaw('right outer join questions q on q.id = a .question_id')
               .whereRaw('survey_count > ?', surveyCountParam )
               .whereIn(knex.raw('a.question_id'), qids)
           q.then(function(resp) {
@@ -210,7 +208,7 @@ router.get('/csv', auth.ensureLoggedIn, auth.ensureAdmin, function(req, res) {
                       obj[r.user_id].user_id = r.user_id;
                       obj[r.user_id][r.text] = r.value;
                       if (questionToIdMap[r.text] === undefined) {
-                          questionToIdMap[r.text] = r.id;
+                          questionToIdMap[r.text] = r.qid;
                       }
                   });
 
@@ -218,8 +216,8 @@ router.get('/csv', auth.ensureLoggedIn, auth.ensureAdmin, function(req, res) {
                   return value;
                 });
                 objs.unshift(questionToIdMap);
-                
-                var fs = require('fs');
+
+            var fs = require('fs');
                 json2csv({data: objs, del: '\t', quotes: ''}, function(err, tsv){
                   fs.writeFile('file.tsv', tsv, function(err) {
                     res.download('file.tsv');
