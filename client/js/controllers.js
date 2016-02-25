@@ -480,7 +480,9 @@ app.controller('UserPasswordController', ["$scope", "$state", "UsersService",
     $scope.change = function(password, new_password){
       UsersService.changePassword(password, new_password).then(function(){
         $state.go('user.dashboard');
-      });
+      }).catch(function() {
+        $scope.errorMessage = "Old/New password is invalid";
+      })
     };
 }]);
 
@@ -495,7 +497,9 @@ app.controller('UserProfileController', ["$scope", "$state", "UsersService",
         return UsersService.verifyLogin();
       }).then(function(){
         $state.go('user.dashboard');
-      });
+      }).catch(function() {
+        $scope.errorMessage = "Password is invalid";
+      })
     };
 }]);
 
