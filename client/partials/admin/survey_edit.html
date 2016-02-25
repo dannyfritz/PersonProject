@@ -1,0 +1,24 @@
+<div>
+  <form>
+    <button type="button" class="close" aria-label="Close" ng-click="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <textarea rows="6" class="survey-edit">{{survey}}</textarea>
+    <div class="form-group">
+      <button type="button" class="btn btn-default" ng-click="updateSurvey(survey)">Save</button>
+    </div>
+    <div class="form-group">
+      <label for="survey-name-edit">Survey Name</label>
+      <input class="survey-name-edit" id="survey-name" type="text" ng-model="survey.survey.name">
+    </div>
+    <div class="form-group">
+      <label for="completion-time">Estimated Time To Complete</label>
+      <input id="completion-time" type="number" ng-model="survey.survey.est_completion_time_minutes">
+    </div>
+
+    <div class="form-group" ng-repeat="group in survey.groups">
+      <div ng-repeat="question in group.questions">
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,19 +1,14 @@
-<div ng-show="surveyForEdit">
-  <form>
-    <button type="button" class="close" aria-label="Close" ng-click="dismissEdit()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <textarea rows="24" class="survey-edit">
-      {{surveyJSON}}
-    </textarea>
-    <div class="form-group">
-      <button type="button" class="btn btn-default" ng-click="updateSurvey(survey)">Save</button>
-    </div>
-  </form>
+<div ng-show="editingSurvey">
+  <survey-edit close="dismissEdit()" survey="surveyJSON"></survey-edit>
+  <hr>
 </div>
 <table class="table admin-table table-bordered table-striped table-compact">
   <tr>
-    <th>Survey</th>
+    <th>Survey
+      <button type="button" class="btn btn-default pull-right" aria-label="Add Survey" ng-click="newSurvey()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+    </th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>

@@ -61,7 +61,7 @@ app.controller('ModalController', ["$scope", "close",
 app.controller('AdminSurveysController', ["$scope", "SurveysService", "SurveyItemsService", "ModalService", "AdminService",
   function($scope, SurveysService, SurveyItemsService, ModalService, AdminService) {
     $scope.surveys;
-    $scope.surveyForEdit;
+    $scope.editingSurvey;
     $scope.surveyJSON;
 
     SurveysService.all(true).then(function(data) {
@@ -69,14 +69,37 @@ app.controller('AdminSurveysController', ["$scope", "SurveysService", "SurveyIte
     });
 
     $scope.showSurvey = function(survey) {
-      $scope.surveyForEdit = survey;
-      SurveyItemsService.find(survey.id).then(function(json) {
-        $scope.surveyJSON = {survey: survey, items: json};
+      $scope.editingSurvey = true;
+      SurveyItemsService.find(survey.id).then(function(items) {
+        var surveyJSON = {survey: survey, groups: []};
+        if (!items) { $scope.surveyJSON = surveyJSON; }
+        else {
+          surveyJSON.survey.version_id = items.version_id;
+          surveyJSON.survey.status = items.status;
+          surveyJSON.survey.algorithm = items.algorithm;
+          surveyJSON.groups = items.groups || [];
+          $scope.surveyJSON = surveyJSON;
+        }
       });
     };
 
+    $scope.newSurvey = function() {
+      $scope.surveyJSON = {survey:
+                            {name: "",
+                             est_completion_time_minutes: 20,
+                             is_featured:false,
+                             position: null,
+                             is_listed:true,
+                             status: "In progress",
+                             algorithm: "average",
+                            },
+                           groups: []
+                         };
+      $scope.editingSurvey = true;
+    }
+
     $scope.dismissEdit = function() {
-      $scope.surveyForEdit = undefined;
+      $scope.editingSurvey = undefined;
       $scope.surveyJSON = undefined;
     };
 
