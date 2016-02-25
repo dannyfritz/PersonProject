@@ -12,18 +12,20 @@ app.directive("surveyEdit", [function() {
     $scope.addTableColumn = function(fields, group) {
       var newField = {
         field_id: "blah",
-        value: 8,
-        position: 8,
+        value: -1,
+        position: -1,
         text: "",
         widget: "radio"
       };
-
-      fields.push(newField);
-
-      group.questions.forEach(function(q) {
-        q.fields.push(newField);
+      fields.forEach(function(f) {
+        newField.value = f.value > newField.value ? f.value : newField.value;
+        newField.position = f.position > newField.position ? f.position : newField.position;
       });
 
+      newField.value++;
+      newField.position++;
+
+      fields.push(newField);
     };
 
     $scope.removeTableQuestion = function(group, question) {
