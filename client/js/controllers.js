@@ -249,13 +249,7 @@ app.controller('SurveyController', ["$rootScope", "$scope", "$stateParams", "$lo
   $scope.dismissModal = function(result) {
     close(result, 200);
     $location.path('/')
- };
-
-  $scope.createSurvey = function () {
-    SurveysService.create(vm.survey).then(function (response) {
-      $state.go('admin.survey', {survey_id: response.id});
-    })
-  }
+  };
 
   var vm = this;
   vm.survey = {};

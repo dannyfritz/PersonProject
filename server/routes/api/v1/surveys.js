@@ -18,12 +18,6 @@ router.get('/', function (req, res, next) {
   }
 });
 
-router.post('/', function (req, res, next) {
-  new Survey(req.body).save().then(function (response) {
-    res.json(response);
-  });
-});
-
 router.get('/:id', function (req, res, next) {
   var key = isNaN(req.params.id) ? 'name' : 'id';
   var query = {};
