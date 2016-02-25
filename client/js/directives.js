@@ -45,6 +45,43 @@ app.directive("surveyEdit", [function() {
         });
       });
     };
+
+    $scope.addRadioOption = function(question) {
+      var newField = {
+        field_id: "radio-14",
+        value: 8,
+        position: 8,
+        text: "",
+        widget: "radio"
+      };
+
+      question.fields.push(newField);
+    };
+
+    $scope.singleQuestionType = function(group) {
+      if (!group || !group.questions || group.questions.length > 1) {
+        return false;
+      }
+
+      if (group.questions.length === 0 ||
+          !group.questions[0].fields ||
+          group.questions[0].fields.length === 0) {
+        return false;
+      }
+      var widgetType = group.questions[0].fields[0].widget;
+      if (widgetType === "number" ||
+          widgetType === "text") {
+        return true;
+      }
+
+      return false;
+    }
+
+    $scope.removeRadio = function(question, field) {
+      question.fields = question.fields.filter(function(f) {
+        return f.field_id !== field.field_id;
+      });
+    };
   }];
 
   return {
@@ -58,18 +95,18 @@ app.directive("surveyEdit", [function() {
 }]);
 
 app.directive("clickToEdit", [function() {
-  var editorTemplate = ['<div class="click-to-edit">',
-                    '<div ng-hide="view.editorEnabled">',
+  var editorTemplate = ['<span class="click-to-edit">',
+                    '<span ng-hide="view.editorEnabled">',
                       '{{value}} ',
                       '<a ng-click="enableEditor()">Edit</a>',
-                    '</div>',
-                    '<div ng-show="view.editorEnabled">',
+                    '</span>',
+                    '<span ng-show="view.editorEnabled">',
                       '<input ng-model="view.editableValue">',
                       '<a href="#" ng-click="save()">Done</a>',
                       ' or ',
                       '<a ng-click="disableEditor()">cancel</a>.',
-                    '</div>',
-                  '</div>'].join('');
+                    '</span>',
+                  '</span>'].join('');
 
   return {
     restrict: "A",
