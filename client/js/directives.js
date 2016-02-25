@@ -82,6 +82,12 @@ app.directive("surveyEdit", [function() {
         return f.field_id !== field.field_id;
       });
     };
+
+    $scope.removeQuestionGroup = function(group) {
+      $scope.survey.groups = $scope.survey.groups.filter(function(g) {
+        return g !== group;
+      })
+    };
   }];
 
   return {
