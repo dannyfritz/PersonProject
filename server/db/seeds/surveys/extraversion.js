@@ -9,7 +9,13 @@ var data = {
   version: {
     version: 1,
     status: "In progress",
-    algorithm: "average"
+    algorithm: [
+      {
+        id: "result",
+        targets: ["extra-q1", "extra-q2"],
+        operation: "average"
+      }
+    ]
   },
   questions: [
     {
