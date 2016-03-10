@@ -10,7 +10,32 @@ var data = {
   },
   version: {
     version: 1,
-    status: "In progress"
+    status: "In progress",
+    algorithm: {
+      tasks: [
+        {
+          id: 'reverse1',
+          targets: ['dprs-q10'],
+          operation: 'noop',
+        },
+        {
+          id: 'reverse2',
+          targets: ['dprs-q14', 'dprs-q18', 'dprs-q19'],
+          operation: 'noop',
+        },
+        {
+          id: 'result',
+          targets: [
+            'dprs-q1', 'dprs-q2', 'dprs-q3', 'dprs-q4',
+            'dprs-q5', 'dprs-q6', 'dprs-q7', 'dprs-q8',
+            'dprs-q9', 'dprs-q10', 'dprs-q11', 'dprs-q12',
+            'dprs-q13', 'dprs-q14', 'dprs-q15', 'dprs-q16',
+            'dprs-q17', 'dprs-q18', 'dprs-q19', 'dprs-q20',
+          ],
+          operation: 'average',
+        }
+      ]
+    }
   },
   questions: [
     {
