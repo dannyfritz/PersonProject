@@ -13,6 +13,7 @@ var Score = require('../../../models/score');
 var User = require('../../../models/user');
 var bookshelf = require('../../../config/connection').surveys;
 var auth = require('../../../middleware/auth/index');
+var algorithmRunner = require('../../../lib/algorithm-runner');
 
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
@@ -42,14 +43,22 @@ router.post('/', function(req, res){
       }));
     }).then(function(model){
       // Scores
+      var scoresPromise = Promise.resolve()
       if(req.body.survey.algorithm){
-        var score = require('../../../lib/algorithms/' + req.body.survey.algorithm)(req.body.answers);
-        new Score({completion_id: completion_id, value: score}).save().then(function(){return res.json({valid: true});});
-      }else {
-        return res.json({valid: true});
+        var algorithm = req.body.survey.algorithm;
+        var answers = req.body.answers;
+        var score = algorithmRunner(algorithm, answers);
+        scoresPromise.then(function () {
+          return new Score({completion_id: completion_id, value: score}).save()
+        })
       }
+      scoresPromise
+        .then(function () {
+          res.json({valid: true});
+        })
+      return scoresPromise;
     }).catch(function(err) {
-      return res.status(500).json({error: err});
+      return res.status(500).json({valid: false, error: err});
     });
   }
 });
