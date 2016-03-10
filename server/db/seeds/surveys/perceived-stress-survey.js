@@ -10,8 +10,7 @@ var data = {
   },
   version: {
     version: 1,
-    status: "In progress",
-    algorithm: "average"
+    status: "In progress"
   },
   questions: [
     {
