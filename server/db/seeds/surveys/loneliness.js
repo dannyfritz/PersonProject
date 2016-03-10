@@ -10,7 +10,24 @@ var data = {
   },
   version: {
     version: 1,
-    status: "In progress"
+    status: "In progress",
+    // algorithm: {
+    //   tasks: [
+    //     {
+    //       id: '-r',
+    //       targets: ['lone-q1', 'lone-q6', 'lone-q7', 'lone-10', 'lone-11'],
+    //       operation: 'reverse',
+    //       options: {
+    //         mapping: {
+    //           1: 4,
+    //           2: 3,
+    //           3: 2,
+    //           4: 1,
+    //         }
+    //       }
+    //     }
+    //   ]
+    // }
   },
   questions: [
     {

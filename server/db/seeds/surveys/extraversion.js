@@ -12,7 +12,7 @@ var data = {
     algorithm: {
       tasks: [
         {
-          id: "part1Reverse",
+          id: "reverse",
           targets: [],
           operation: "noop"
         },
