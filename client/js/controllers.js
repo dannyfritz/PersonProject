@@ -481,7 +481,7 @@ app.controller('UserPasswordController', ["$scope", "$state", "UsersService",
       UsersService.changePassword(password, new_password).then(function(){
         $state.go('user.dashboard');
       }).catch(function() {
-        $scope.errorMessage = "Old/New password is invalid";
+        $scope.errorMessage = "Old password is invalid";
       })
     };
 }]);
