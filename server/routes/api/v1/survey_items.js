@@ -43,7 +43,6 @@ router.post('/', function(req, res){
       }));
     }).then(function(model){
       // Scores
-      var scoresPromise = Promise.resolve()
       if(req.body.survey.algorithm){
         try {
           var algorithm = JSON.parse(req.body.survey.algorithm);
@@ -52,11 +51,8 @@ router.post('/', function(req, res){
         }
         var answers = req.body.answers;
         var score = algorithmRunner(algorithm, answers);
-        scoresPromise.then(function () {
-          return new Score({completion_id: completion_id, value: score}).save();
-        })
+        return new Score({completion_id: completion_id, value: score}).save();
       }
-      return scoresPromise;
     })
     .then(function () {
       res.json({valid: true});
