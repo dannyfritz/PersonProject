@@ -45,20 +45,25 @@ router.post('/', function(req, res){
       // Scores
       var scoresPromise = Promise.resolve()
       if(req.body.survey.algorithm){
-        var algorithm = JSON.parse(req.body.survey.algorithm);
+        try {
+          var algorithm = JSON.parse(req.body.survey.algorithm);
+        } catch (reason) {
+          return Promise.reject("Unable to parse algorithm JSON:\n" + reason.message);
+        }
         var answers = req.body.answers;
         var score = algorithmRunner(algorithm, answers);
         scoresPromise.then(function () {
-          return new Score({completion_id: completion_id, value: score}).save()
+          return new Score({completion_id: completion_id, value: score}).save();
         })
       }
-      scoresPromise
-        .then(function () {
-          res.json({valid: true});
-        })
       return scoresPromise;
-    }).catch(function(err) {
-      return res.status(500).json({valid: false, error: err});
+    })
+    .then(function () {
+      res.json({valid: true});
+    })
+    .catch(function(err) {
+      console.log(err)
+      res.status(500).json({valid: false, error: err.message || err});
     });
   }
 });
