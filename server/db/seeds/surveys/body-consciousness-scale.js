@@ -10,7 +10,16 @@ var data = {
   },
   version: {
     version: 1,
-    status: "In progress"
+    status: "In progress",
+    algorithm: {
+      tasks: [
+        {
+          id: "result",
+          targets: ["bc-q1", "bc-q2", "bc-q3", "bc-q4", "bc-q5"],
+          operation: "average"
+        }
+      ]
+    }
   },
   questions: [
     {
