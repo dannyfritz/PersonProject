@@ -45,7 +45,7 @@ router.post('/', function(req, res){
       // Scores
       var scoresPromise = Promise.resolve()
       if(req.body.survey.algorithm){
-        var algorithm = req.body.survey.algorithm;
+        var algorithm = JSON.parse(req.body.survey.algorithm);
         var answers = req.body.answers;
         var score = algorithmRunner(algorithm, answers);
         scoresPromise.then(function () {

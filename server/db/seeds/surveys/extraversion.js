@@ -9,13 +9,20 @@ var data = {
   version: {
     version: 1,
     status: "In progress",
-    algorithm: [
-      {
-        id: "result",
-        targets: ["extra-q1", "extra-q2"],
-        operation: "average"
-      }
-    ]
+    algorithm: {
+      tasks: [
+        {
+          id: "part1Reverse",
+          targets: [],
+          operation: "noop"
+        },
+        {
+          id: "result",
+          targets: ["extra-q1", "extra-q2"],
+          operation: "average"
+        }
+      ]
+    }
   },
   questions: [
     {
