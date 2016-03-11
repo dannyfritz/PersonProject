@@ -65,7 +65,7 @@ var data = {
         //   output: 'result',
         //   inputs: [
         //    'tangibleSupport', 'affectionateSupport', 'positiveSocialInteraction',
-        //    'emotionalSupport', 'overall'
+        //    'emotionalSupport', 'informationalSupport', 'overall'
         //   ]
         // },
       ]
