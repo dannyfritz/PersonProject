@@ -8,8 +8,6 @@ module.exports = function (algorithm, answers) {
       throw new Error('Trying to use algorithm operation, "' + task.operation + '", that does not exist!');
     }
     operations[task.operation](context, task, answers);
-    console.log(task);
-    console.log(context);
     return context;
   }, {});
   if (!context.result) {
