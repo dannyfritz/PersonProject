@@ -25,7 +25,7 @@
         <span ng-if="group.type === 'table'">
           <div class="well">
             <button type="button" class="btn btn-danger" aria-label="Remove Question Group" ng-click="removeQuestionGroup(group)">
-              Remove Question Group <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
             <div ng-init="fields = group.questions[0].fields" ng-include="'/partials/admin/includes/table.html'"></div>
           </div>
@@ -33,7 +33,7 @@
         <span ng-if="!group.type">
           <div class="well">
             <button type="button" class="btn btn-danger" aria-label="Remove Question Group" ng-click="removeQuestionGroup(group)">
-              Remove Question Group <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
             <div ng-include="'/partials/admin/includes/free.html'"></div>
           </div>
