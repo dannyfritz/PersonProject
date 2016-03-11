@@ -1,5 +1,6 @@
 var _ = require('lodash');
+var mapping = require('./mapping')
 
-module.exports = function(inputs){
-  return sum / Object.keys(inputs).length;
+module.exports = function(context, task, answers){
+  
 };

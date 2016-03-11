@@ -12,13 +12,15 @@ var data = {
     algorithm: {
       tasks: [
         {
-          id: "reverse",
-          targets: [],
-          operation: "noop"
+          suffix: "-r",
+          inputs: ['extra-f2'],
+          operation: "noop",
+          min: 1,
+          max: 7
         },
         {
-          id: "result",
-          targets: ["extra-q1", "extra-q2"],
+          output: "result",
+          inputs: ["extra-q1", "extra-q2"],
           operation: "average"
         }
       ]

@@ -1,7 +1,7 @@
 module.exports = {
   average: require('./average'),
+  mapping: require('./mapping'),
   reverse: require('./reverse'),
-  //TODO (danny): mapping
-  //TODO (danny): sum
+  sum: require('./sum'),
   noop: require('./noop'),
 }
