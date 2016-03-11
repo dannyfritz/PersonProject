@@ -14,8 +14,8 @@ var data = {
     algorithm: {
       tasks: [
         {
-          id: "result",
-          targets: ["bc-q1", "bc-q2", "bc-q3", "bc-q4", "bc-q5"],
+          output: "result",
+          inputs: ["bc-q1", "bc-q2", "bc-q3", "bc-q4", "bc-q5"],
           operation: "average"
         }
       ]
