@@ -30,7 +30,7 @@ app.directive('surveyEdit', [function() {
 
     $scope.addTableColumn = function(fields, group) {
       var newField = {
-        field_id: "blah",
+        field_id: randomQuestionId(8),
         value: -1,
         position: -1,
         text: "",
@@ -68,10 +68,18 @@ app.directive('surveyEdit', [function() {
     };
 
     $scope.addRadioOption = function(question) {
+      var greatestValue = question.fields.reduce(function(acc, field) {
+        return field.value > acc ? field.value : acc;
+      }, 1);
+
+
+      var greatestPosition = question.fields.reduce(function(acc, field) {
+        return field.position > acc ? field.position : acc;
+      }, 1);
       var newField = {
-        field_id: "radio-14",
-        value: 8,
-        position: 8,
+        field_id: randomQuestionId(8),
+        value: greatestValue + 1,
+        position: greatestPosition + 1,
         text: "",
         widget: "radio"
       };
