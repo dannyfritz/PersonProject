@@ -14,18 +14,15 @@ var data = {
     algorithm: {
       tasks: [
         {
-          id: 'reverse1',
-          targets: ['dprs-q10'],
+          output: 'reverse',
+          inputs: ['dprs-q10', 'dprs-q14', 'dprs-q18', 'dprs-q19'],
           operation: 'noop',
+          min: 1,
+          max: 4
         },
         {
-          id: 'reverse2',
-          targets: ['dprs-q14', 'dprs-q18', 'dprs-q19'],
-          operation: 'noop',
-        },
-        {
-          id: 'result',
-          targets: [
+          output: 'result',
+          inputs: [
             'dprs-q1', 'dprs-q2', 'dprs-q3', 'dprs-q4',
             'dprs-q5', 'dprs-q6', 'dprs-q7', 'dprs-q8',
             'dprs-q9', 'dprs-q10', 'dprs-q11', 'dprs-q12',
