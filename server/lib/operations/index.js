@@ -3,5 +3,6 @@ module.exports = {
   mapping: require('./mapping'),
   reverse: require('./reverse'),
   sum: require('./sum'),
+  pluck: require('./pluck'),
   noop: require('./noop'),
 }

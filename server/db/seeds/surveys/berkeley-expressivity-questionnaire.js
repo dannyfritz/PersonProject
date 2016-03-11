@@ -10,7 +10,52 @@ var data = {
   },
   version: {
     version: 1,
-    status: "In progress"
+    status: "In progress",
+    algorithm: {
+      tasks: [
+        {
+          operation: "reverse",
+          inputs: [
+            "beq-q3", "beq-q8", "beq-q9"
+          ],
+          min: 1,
+          max: 7
+        },
+        {
+          operation: "average",
+          output: "negativeExpressivity",
+          inputs: ["beq-q9", "beq-q13", "beq-q16", "beq-q3", "beq-q5", "beq-q8"]
+        },
+        {
+          operation: "average",
+          output: "positiveExpressivity",
+          inputs: ["beq-q6", "beq-q1", "beq-q4", "beq-q10"]
+        },
+        {
+          operation: "average",
+          output: "impulseExpressivity",
+          inputs: ["beq-q15", "beq-q11", "beq-q14", "beq-q7", "beq-q2", "beq-q12"]
+        },
+        {
+          operation: "average",
+          output: "result",
+          //output: "overall",
+          inputs: [
+            "beq-q1", "beq-q2", "beq-q3", "beq-q4", "beq-q5", "beq-q6", "beq-q7",
+            "beq-q8", "beq-q9", "beq-q10", "beq-q11", "beq-q12", "beq-q13",
+            "beq-q14", "beq-q15", "beq-q16"
+          ],
+        },
+        // {
+        //   operation: "pluck",
+        //   output: "result",
+        //   inputs: [
+        //     "overall", "impulseExpressivity", "negativeExpressivity",
+        //     "positiveExpressivity"
+        //   ]
+        // }
+      ]
+    }
   },
   questions: [
     {
@@ -230,4 +275,3 @@ var data = {
 };
 
 createSurvey(data);
-
