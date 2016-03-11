@@ -53,18 +53,19 @@ var data = {
           output: 'result',
           //output: 'overall',
           inputs: [
-            'mosss-q3', 'mosss-q7', 'mosss-q12', 'mosss-q16'
+            'mosss-q1', 'mosss-q2', 'mosss-q3', 'mosss-q4', 'mosss-q5',
+            'mosss-q6', 'mosss-q7', 'mosss-q8', 'mosss-q9', 'mosss-q10',
+            'mosss-q11', 'mosss-q12', 'mosss-q13', 'mosss-q14', 'mosss-q15',
+            'mosss-q16', 'mosss-q17', 'mosss-q18', 'mosss-q19', 'mosss-q20',
+            'mosss-q21'
           ]
         },
         // {
         //   operation: 'pluck',
         //   output: 'result',
         //   inputs: [
-        //     'mosss-q1', 'mosss-q2', 'mosss-q3', 'mosss-q4', 'mosss-q5',
-        //     'mosss-q6', 'mosss-q7', 'mosss-q8', 'mosss-q9', 'mosss-q10',
-        //     'mosss-q11', 'mosss-q12', 'mosss-q13', 'mosss-q14', 'mosss-q15',
-        //     'mosss-q16', 'mosss-q17', 'mosss-q18', 'mosss-q19', 'mosss-q20',
-        //     'mosss-q21'
+        //    'tangibleSupport', 'affectionateSupport', 'positiveSocialInteraction',
+        //    'emotionalSupport', 'overall'
         //   ]
         // },
       ]
