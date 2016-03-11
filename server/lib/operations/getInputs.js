@@ -7,7 +7,7 @@ module.exports = function getInputs (inputs, context, answers) {
       result[key] = answers[key];
       return result;
     }
-    throw new Error('Target, "' + target + '", missing from Algorithm.')
+    throw new Error('Input, "' + key + '", missing from answers or context.')
   }, {});
   return result;
 }
