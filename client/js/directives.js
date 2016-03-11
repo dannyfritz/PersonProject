@@ -1,5 +1,24 @@
-app.directive("surveyEdit", [function() {
+app.directive('surveyEdit', [function() {
   var controller = ['$scope', function($scope) {
+
+    function randomQuestionId(length) {
+      var vals = 'abcdefghijklmnopqrstuvwxyz1234567890-$#'.split('');
+      var randomStr = [];
+      for (var i = 0; i < length; i++) {
+        var index = Math.floor(Math.random() * vals.length);
+        randomStr.push(vals[index]);
+      }
+
+      return randomStr.join('');
+    }
+
+    $scope.groupTypes = [{name: 'table', id: 'table'},
+                         {name: 'numeric', id: 'number'},
+                         {name: 'radio button', id: 'radio'},
+                         {name: 'radio with text', id: 'radio_text'},
+                         {name: 'text', id: 'text'}
+                        ];
+
     $scope.addTableQuestion = function(fields, group) {
       group.questions.push({fields: fields,
                             data: {question_id: "",
@@ -89,6 +108,39 @@ app.directive("surveyEdit", [function() {
       $scope.survey.groups = $scope.survey.groups.filter(function(g) {
         return g !== group;
       })
+    };
+
+    $scope.addQuestionGroup = function(newGroupId) {
+      var maxNumberInGroup = $scope.survey.groups.reduce(function(acc, g) {
+        return g.number > acc ? g.number : acc;
+      }, 0);
+
+      var groupType = (newGroupId === 'table' ? 'table' : null);
+      var widgetType = (newGroupId === 'table' ? 'radio' : newGroupId);
+
+      var newGroup = {number: maxNumberInGroup + 1,
+                      type: groupType,
+                      title: null,
+                      master_id: null,
+                      dependent_id: null,
+                      dependent_value: null,
+                      show: true,
+                      questions: [{
+                        fields: [{
+                          field_id: randomQuestionId(11),
+                          value: 1,
+                          position: 1,
+                          text: null,
+                          widget: widgetType
+                        }],
+                        data: {
+                          question_id: randomQuestionId(11),
+                          text: "Question 1",
+                          position: null
+                        }
+                      }]
+                    };
+      $scope.survey.groups.push(newGroup);
     };
   }];
 

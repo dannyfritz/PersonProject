@@ -40,5 +40,16 @@
         </span>
       </span>
     </div>
+
+    <div class="form-group">
+      <button type="button" class="btn btn-primary" aria-label="Add Question Group" ng-click="addQuestionGroup(newGroupId)">
+        Add Question Group <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+
+      <select name="groupTypeSelect" id="groupTypeSelect" ng-model="newGroupId">
+        <option ng-repeat="groupType in groupTypes" value="{{groupType.id}}">{{groupType.name}}</option>
+      </select>
+    </div>
+
   </form>
 </div>
