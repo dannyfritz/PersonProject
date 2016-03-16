@@ -1,4 +1,5 @@
 <div ng-repeat='question in group.questions'>
+  <span click-to-edit="question.data.question_id">{{question.data.question_id}}</span>
   <div click-to-edit="question.data.text">{{question.data.text}}</div>
   <div ng-repeat='field in question.fields | orderBy: "+position"'>
     <div ng-include="'/partials/admin/includes/' + field.widget + '.html'"></div>

@@ -21,7 +21,7 @@ app.directive('surveyEdit', [function() {
 
     $scope.addTableQuestion = function(fields, group) {
       group.questions.push({fields: fields,
-                            data: {question_id: "",
+                            data: {question_id: randomQuestionId(8),
                                    position: null,
                                    text: ""
                                   }
