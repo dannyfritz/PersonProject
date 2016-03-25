@@ -9,7 +9,22 @@ var data = {
   version: {
     version: 1,
     status: "In progress",
-    algorithm: "average"
+    algorithm: {
+      tasks: [
+        {
+          suffix: "-r",
+          inputs: ['extra-f2'],
+          operation: "noop",
+          min: 1,
+          max: 7
+        },
+        {
+          output: "result",
+          inputs: ["extra-q1", "extra-q2"],
+          operation: "average"
+        }
+      ]
+    }
   },
   questions: [
     {

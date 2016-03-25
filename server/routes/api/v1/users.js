@@ -247,7 +247,7 @@ var usersApi = function(passport) {
 
       surveysDb.knex.raw(query, [data1.rows[0].completion_id]).then(function(data2){
         var sum = _.reduce(data2.rows, function(acc, row){
-          return acc + row.value;
+          return acc + JSON.parse(row.value).overall;
         }, 0);
         var avg = sum / data2.rows.length;
         res.json({survey: data1.rows[0].name, score: data1.rows[0].value, average: avg});

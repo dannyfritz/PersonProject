@@ -11,7 +11,26 @@ var data = {
   version: {
     version: 1,
     status: "In progress",
-    algorithm: "average"
+    algorithm: {
+      tasks: [
+        {
+          operation: 'noop',
+          inputs: [
+            'pss-q4', 'pss-q5', 'pss-q7', 'pss-q8'
+          ],
+          min: 1,
+          max: 5
+        },
+        {
+          operation: 'average',
+          output: 'result',
+          inputs: [
+            'pss-q1', 'pss-q2', 'pss-q3', 'pss-q4', 'pss-q5', 'pss-q6',
+            'pss-q7', 'pss-q8', 'pss-q9', 'pss-q10'
+          ]
+        }
+      ]
+    }
   },
   questions: [
     {

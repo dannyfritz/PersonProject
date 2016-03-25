@@ -13,6 +13,7 @@ var Score = require('../../../models/score');
 var User = require('../../../models/user');
 var bookshelf = require('../../../config/connection').surveys;
 var auth = require('../../../middleware/auth/index');
+var algorithmRunner = require('../../../lib/algorithm-runner');
 
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
@@ -43,13 +44,22 @@ router.post('/', function(req, res){
     }).then(function(model){
       // Scores
       if(req.body.survey.algorithm){
-        var score = require('../../../lib/algorithms/' + req.body.survey.algorithm)(req.body.answers);
-        new Score({completion_id: completion_id, value: score}).save().then(function(){return res.json({valid: true});});
-      }else {
-        return res.json({valid: true});
+        try {
+          var algorithm = JSON.parse(req.body.survey.algorithm);
+        } catch (reason) {
+          return Promise.reject("Unable to parse algorithm JSON:\n" + reason.message);
+        }
+        var answers = req.body.answers;
+        var score = algorithmRunner(algorithm, answers);
+        return new Score({completion_id: completion_id, value: score}).save();
       }
-    }).catch(function(err) {
-      return res.status(500).json({error: err});
+    })
+    .then(function () {
+      res.json({valid: true});
+    })
+    .catch(function(err) {
+      console.log(err)
+      res.status(500).json({valid: false, error: err.message || err});
     });
   }
 });

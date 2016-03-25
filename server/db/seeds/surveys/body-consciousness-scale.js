@@ -11,7 +11,15 @@ var data = {
   version: {
     version: 1,
     status: "In progress",
-    algorithm: "average"
+    algorithm: {
+      tasks: [
+        {
+          output: "result",
+          inputs: ["bc-q1", "bc-q2", "bc-q3", "bc-q4", "bc-q5"],
+          operation: "average"
+        }
+      ]
+    }
   },
   questions: [
     {

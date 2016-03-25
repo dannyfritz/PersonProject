@@ -10,7 +10,30 @@ var data = {
   },
   version: {
     version: 1,
-    status: "In progress"
+    status: "In progress",
+    algorithm: {
+      tasks: [
+        {
+          operation: 'reverse',
+          inputs: [
+            'lone-q1', 'lone-q5', 'lone-q9', 'lone-q10', 'lone-q15',
+            'lone-q16', 'lone-q19', 'lone-q20'
+          ],
+          min: 1,
+          max: 4
+        },
+        {
+          operation: 'average',
+          output: 'result',
+          inputs: [
+            'lone-q1', 'lone-q2', 'lone-q3', 'lone-q4', 'lone-q5', 'lone-q6',
+            'lone-q7', 'lone-q8', 'lone-q9', 'lone-q10', 'lone-q11', 'lone-q12',
+            'lone-q13', 'lone-q14', 'lone-q15', 'lone-q16', 'lone-q17',
+            'lone-q18', 'lone-q19', 'lone-q20'
+          ]
+        }
+      ]
+    }
   },
   questions: [
     {

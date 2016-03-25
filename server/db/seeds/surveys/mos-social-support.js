@@ -10,7 +10,66 @@ var data = {
   },
   version: {
     version: 1,
-    status: "In progress"
+    status: "In progress",
+    algorithm: {
+      tasks: [
+        {
+          operation: 'average',
+          output: 'tangibleSupport',
+          inputs: [
+            'mosss-q1', 'mosss-q4', 'mosss-q11', 'mosss-q14'
+          ]
+        },
+        {
+          operation: 'average',
+          output: 'affectionateSupport',
+          inputs: [
+            'mosss-q5', 'mosss-q9', 'mosss-q19'
+          ]
+        },
+        {
+          operation: 'average',
+          output: 'positiveSocialInteraction',
+          inputs: [
+            'mosss-q6', 'mosss-q10', 'mosss-q17'
+          ]
+        },
+        {
+          operation: 'average',
+          output: 'emotionalSupport',
+          inputs: [
+            'mosss-q2', 'mosss-q8', 'mosss-q15', 'mosss-q18'
+          ]
+        },
+        {
+          operation: 'average',
+          output: 'informationalSupport',
+          inputs: [
+            'mosss-q3', 'mosss-q7', 'mosss-q12', 'mosss-q16'
+          ]
+        },
+        {
+          operation: 'average',
+          // output: 'result',
+          output: 'overall',
+          inputs: [
+            'mosss-q1', 'mosss-q2', 'mosss-q3', 'mosss-q4', 'mosss-q5',
+            'mosss-q6', 'mosss-q7', 'mosss-q8', 'mosss-q9', 'mosss-q10',
+            'mosss-q11', 'mosss-q12', 'mosss-q13', 'mosss-q14', 'mosss-q15',
+            'mosss-q16', 'mosss-q17', 'mosss-q18', 'mosss-q19', 'mosss-q20',
+            'mosss-q21'
+          ]
+        },
+        {
+          operation: 'pluck',
+          output: 'result',
+          inputs: [
+           'tangibleSupport', 'affectionateSupport', 'positiveSocialInteraction',
+           'emotionalSupport', 'informationalSupport', 'overall'
+          ]
+        },
+      ]
+    }
   },
   questions: [
     {
