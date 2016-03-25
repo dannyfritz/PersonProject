@@ -15,7 +15,9 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed venenatis felis mi, vitae iaculis mauris commodo in. Sed sed tempor lorem, sit amet commodo sem. Donec ut porta tellus. Praesent commodo libero id felis eleifend varius. Aliquam est massa, vehicula pharetra rhoncus et, aliquet ac nibh. Nulla lacus purus, tristique non pellentesque eget, accumsan vitae felis. Vestibulum sed tortor augue. Donec bibendum viverra quam eu porta. Mauris sagittis enim eget nulla mattis, a rhoncus nibh congue. Pellentesque mattis ante a nisl maximus cursus sit amet efficitur urna. Suspendisse tincidunt fermentum tortor quis fermentum. Morbi aliquet, lorem sit amet ultrices posuere, metus eros gravida tellus, id feugiat elit elit nec orci. Phasellus placerat elementum quam in mattis. Suspendisse ultricies sapien sed tellus volutpat imperdiet. Curabitur commodo erat a erat sodales hendrerit. Cras maximus sed massa in luctus.</p>
 
   <h4>Your score</h4>
-  {{result.score}} (user score) || {{result.survey}} || {{result.average}} (average score)
+  <div ng-repeat="(key, result) in result.score">
+    {{key | wordCase}}: {{result | number:2}}
+  </div>
 
   <h4>Related research</h4>
   <p>In aliquet nunc sed nibh pulvinar, pretium rhoncus massa euismod. Praesent sit amet diam dignissim, feugiat purus ac, efficitur felis. Fusce fermentum cursus dui. Curabitur scelerisque, nisl ac posuere cursus, felis ex vestibulum est, vitae vulputate urna ex et lorem. Quisque nec ultricies diam. Etiam eleifend tincidunt erat sed bibendum. Curabitur vel porta leo. In pharetra auctor sapien vitae tristique. Donec aliquam, mauris tincidunt consectetur convallis, justo quam molestie ex, sit amet tristique lorem elit at nibh.</p>
