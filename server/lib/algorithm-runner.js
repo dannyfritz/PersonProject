@@ -13,5 +13,8 @@ module.exports = function (algorithm, answers) {
   if (!context.result) {
     throw new Error('Error calculating algorithm result\nThere must be an output of "result" on the survey version\'s algorithm tasks');
   }
+  if (_.isNumber(context.result)) {
+    context.result = {overall: context.result}
+  }
   return context.result;
 };

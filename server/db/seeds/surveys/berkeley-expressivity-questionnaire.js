@@ -38,22 +38,22 @@ var data = {
         },
         {
           operation: "average",
-          output: "result",
-          //output: "overall",
+          // output: "result",
+          output: "overall",
           inputs: [
             "beq-q1", "beq-q2", "beq-q3", "beq-q4", "beq-q5", "beq-q6", "beq-q7",
             "beq-q8", "beq-q9", "beq-q10", "beq-q11", "beq-q12", "beq-q13",
             "beq-q14", "beq-q15", "beq-q16"
           ],
         },
-        // {
-        //   operation: "pluck",
-        //   output: "result",
-        //   inputs: [
-        //     "overall", "impulseExpressivity", "negativeExpressivity",
-        //     "positiveExpressivity"
-        //   ]
-        // }
+        {
+          operation: "pluck",
+          output: "result",
+          inputs: [
+            "overall", "impulseExpressivity", "negativeExpressivity",
+            "positiveExpressivity"
+          ]
+        }
       ]
     }
   },

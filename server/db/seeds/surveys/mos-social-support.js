@@ -50,8 +50,8 @@ var data = {
         },
         {
           operation: 'average',
-          output: 'result',
-          //output: 'overall',
+          // output: 'result',
+          output: 'overall',
           inputs: [
             'mosss-q1', 'mosss-q2', 'mosss-q3', 'mosss-q4', 'mosss-q5',
             'mosss-q6', 'mosss-q7', 'mosss-q8', 'mosss-q9', 'mosss-q10',
@@ -60,14 +60,14 @@ var data = {
             'mosss-q21'
           ]
         },
-        // {
-        //   operation: 'pluck',
-        //   output: 'result',
-        //   inputs: [
-        //    'tangibleSupport', 'affectionateSupport', 'positiveSocialInteraction',
-        //    'emotionalSupport', 'informationalSupport', 'overall'
-        //   ]
-        // },
+        {
+          operation: 'pluck',
+          output: 'result',
+          inputs: [
+           'tangibleSupport', 'affectionateSupport', 'positiveSocialInteraction',
+           'emotionalSupport', 'informationalSupport', 'overall'
+          ]
+        },
       ]
     }
   },
