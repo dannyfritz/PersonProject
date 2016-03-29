@@ -30,7 +30,11 @@
     <tbody>
       <tr ng-repeat="c in completions | orderBy: '-id'">
         <td><a ui-sref="user.results_detail({completion_id: c.id})">{{c.name}}</a></td>
-        <td>{{c.value}}</td>
+        <td>
+          <div ng-repeat="(key, result) in c.value">
+            {{key | wordCase}}: {{result | number:2}}
+          </div>
+        </td>
         <td>{{c.recorded_time}}</td>
         <td>{{c.created_at | date:'medium'}}</td>
       </tr>

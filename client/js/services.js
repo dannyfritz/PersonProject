@@ -248,11 +248,21 @@ app.factory('SurveysService', ["$http",
 
 app.factory('UsersService', ["$http", "LocalAuthService",
   function($http, LocalAuthService) {
-
+  function parseSurvey (survey) {
+    console.log(survey)
+    if (survey.value) {
+      survey.value = JSON.parse(survey.value)
+    }
+    if (survey.score) {
+      survey.score = JSON.parse(survey.score)
+    }
+    return survey
+  }
   var users;
   return {
     completedSurveys: function() {
       return $http.get('/api/v1/users/completed-surveys').then(function (response) {
+        response.data.rows = response.data.rows.map(parseSurvey)
         return response.data;
       });
     },
@@ -268,8 +278,7 @@ app.factory('UsersService', ["$http", "LocalAuthService",
     },
     result: function(completion_id) {
       return $http.post('/api/v1/users/result', {completion_id: completion_id, userToken: LocalAuthService.getToken()}).then(function (response) {
-        response.data.score = JSON.parse(response.data.score)
-        return response.data;
+        return parseSurvey(response.data);
       });
     },
     migrate: function() {
